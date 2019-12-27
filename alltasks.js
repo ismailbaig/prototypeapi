@@ -141,6 +141,59 @@ app.get('/task2', (req, res) => {
     });
 });
 
+
+
+// ***************Prototype API **************************
+// Feature : What species (i.e. characters that belong to certain species) appeared in the most number of Star Wars films?
+// Author: Ismail Baig
+// Type : REST API
+// Geiven generic names to API for security reason as it is exposed to outside world.
+app.get('/task3', (req, res) => {
+    MongoClient.connect(url, 
+    { useNewUrlParser: true,  useUnifiedTopology: true },
+    function(err, client){
+        if (err) throw err;
+        
+        var db = client.db('star-wars');
+
+        var query = {};
+
+        var cursor = db.collection('films').find(query);
+        var spList = [];
+        cursor.toArray(function(err, films) {
+            console.dir('Got flims');
+            if (err) throw err;        
+        
+            films.forEach(film => {
+                film.characters.forEach(chr => {
+                    var index = spList.findIndex(obj => obj.id == chr);
+                    index >= 0 ? spList[index].count += 1 : spList.push({id: chr, count: 1})
+                })
+            });
+
+            var finalList = []
+        
+            cursor = db.collection('species').find(query);
+
+            cursor.toArray(function(err, species) {
+                species.forEach(spcy => {
+                    var _count = 0;
+                    spcy.people.forEach(p => {
+                        var obj = spList.filter(sp => sp.id == p)
+                        _count += obj[0].count
+                    })
+                    finalList.push({id: spcy.id, name: spcy.name, count: _count});
+                })
+
+                res.send(finalList.sort((a,b)=> b.count - a.count).filter(x => x.count >= 4));
+            }); 
+
+            client.close();
+
+        });
+    });
+});
+
 // ***************Prototype API **************************
 // Feature : Port Listening
 // Author: Ismail Baig
