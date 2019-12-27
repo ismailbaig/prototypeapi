@@ -26,7 +26,7 @@ In Cloud:
 3. Go to the folder where this API project is placed
 4. run 'npm install'
      This will install all the dependencies needed to run this project.
-5. run the command 'ng build --prod'
+5. run the command 'npm build --prod'
 6. Login to any cloud (e.g AWS EC2) instance
 7. Open a terminal and the port. Make sure to open the same port which your API is coded. e.g 4000
 8. Genereate a PEM file (this is specific for AWS EC2)
