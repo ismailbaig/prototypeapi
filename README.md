@@ -8,8 +8,9 @@ Mock Data is just placed, but the API is calling the real time MONGO DB for data
 HOW TO RUN:
 ----------
 In DEV Environment:
-1. OPEN Node Command prompt.
-2. Type 'node alltasks.js'
+1. Install Nodejs
+2. OPEN Node Command prompt.
+3. Type 'node alltasks.js'
        This will run the API at the PORT 4000!
 
 
